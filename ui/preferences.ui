@@ -720,6 +720,35 @@ identical CPUs in order to migrate the VM.</property>
                         <property name="top-attach">4</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="tooltip-text" translatable="yes">If enabled, the VM window will automatically sync the clipboard with the running VM.</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">SPICE _clipboard sync:</property>
+                        <property name="use-underline">True</property>
+                        <property name="mnemonic-widget">prefs-console-autoclipboard</property>
+                      </object>
+
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+
+                    <child>
+                      <object class="GtkComboBox" id="prefs-console-autoclipboard">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <signal name="changed" handler="on_prefs_console_autoclipboard_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+
                   </object>
                 </child>
                 <child type="label">

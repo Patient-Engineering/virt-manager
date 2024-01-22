@@ -117,6 +117,7 @@ class vmmVMWindow(vmmGObjectUI):
             "on_details_menu_virtual_manager_activate": self.control_vm_menu,
             "on_details_menu_screenshot_activate": self.control_vm_screenshot,
             "on_details_menu_usb_redirection": self.control_vm_usb_redirection,
+            "on_details_menu_autoclipboard_toggled": self.control_vm_auto_clipboard,
             "on_details_menu_view_toolbar_activate": self.toggle_toolbar,
             "on_details_menu_view_manager_activate": self.view_manager,
             "on_details_menu_view_details_toggled": self.details_console_changed,
@@ -154,6 +155,12 @@ class vmmVMWindow(vmmGObjectUI):
         self.add_gsettings_handle(
             self.vm.on_console_autoconnect_changed(
                 self._console_refresh_autoconnect_from_settings))
+
+        self._console_refresh_auto_clipboard_from_settings()
+        self.add_gsettings_handle(
+            self.vm.on_console_auto_clipboard_changed(
+                self._console_refresh_auto_clipboard_from_settings))
+
 
         self._refresh_vm_state()
         self.activate_default_page()

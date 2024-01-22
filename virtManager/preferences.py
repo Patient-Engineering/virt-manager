@@ -42,6 +42,7 @@ class vmmPreferences(vmmGObjectUI):
         self.refresh_console_scaling()
         self.refresh_console_resizeguest()
         self.refresh_console_autoredir()
+        self.refresh_console_autoclipboard()
         self.refresh_console_autoconnect()
         self.refresh_graphics_type()
         self.refresh_storage_format()
@@ -71,6 +72,7 @@ class vmmPreferences(vmmGObjectUI):
             "on_prefs_console_resizeguest_changed": self.change_console_resizeguest,
             "on_prefs_console_autoredir_changed": self.change_console_autoredir,
             "on_prefs_console_autoconnect_toggled": self.change_console_autoconnect,
+            "on_prefs_console_autoclipboard_toggled": self.change_console_autoclipboard,
             "on_prefs_graphics_type_changed": self.change_graphics_type,
             "on_prefs_storage_format_changed": self.change_storage_format,
             "on_prefs_cpu_default_changed": self.change_cpu_default,
@@ -136,6 +138,18 @@ class vmmPreferences(vmmGObjectUI):
         vals = {
             False: _("Manual redirect only"),
             True: _("Auto redirect on USB attach"),
+        }
+        for key, val in vals.items():
+            model.append([key, val])
+        combo.set_model(model)
+        uiutil.init_combo_text_column(combo, 1)
+
+        combo = self.widget("prefs-console-autoclipboard")
+        # [gsettings value, string]
+        model = Gtk.ListStore(bool, str)
+        vals = {
+            False: _("Disabled by default"),
+            True: _("Enabled by default"),
         }
         for key, val in vals.items():
             model.append([key, val])
@@ -232,6 +246,10 @@ class vmmPreferences(vmmGObjectUI):
     def refresh_console_autoconnect(self):
         val = self.config.get_console_autoconnect()
         self.widget("prefs-console-autoconnect").set_active(val)
+    def refresh_console_autoclipboard(self):
+        combo = self.widget("prefs-console-autoclipboard")
+        val = self.config.get_auto_clipboard()
+        uiutil.set_list_selection(combo, val)
 
     def refresh_graphics_type(self):
         combo = self.widget("prefs-graphics-type")
@@ -379,6 +397,9 @@ class vmmPreferences(vmmGObjectUI):
         self.config.set_auto_usbredir(val)
     def change_console_autoconnect(self, src):
         self.config.set_console_autoconnect(bool(src.get_active()))
+    def change_console_autoclipboard(self, box):
+        val = uiutil.get_list_selection(box)
+        self.config.set_auto_clipboard(val)
 
     def change_graphics_type(self, src):
         val = uiutil.get_list_selection(src)

@@ -101,6 +101,16 @@
                         <signal name="activate" handler="on_details_menu_usb_redirection" swapped="no"/>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkCheckMenuItem" id="details-menu-auto-clipboard">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="tooltip-text" translatable="yes">Enable or disable clipboard sync with the virtual machine running a SPICE agent.</property>
+                        <property name="label" translatable="yes">Sync _clipboard</property>
+                        <property name="use-underline">True</property>
+                        <signal name="toggled" handler="on_details_menu_autoclipboard_toggled" swapped="no"/>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
